@@ -182,12 +182,19 @@ namespace Class_Wars_2._0
                     return;
             }
 
-            if (arenas.exists(args.Parameters[1]))
+            Arenas arenas = new Arenas();
+
+            if (arenas.Exists(args.Parameters[1]))
             {
                 player.SendInfoMessage("There is already an arena named \'" + args.Parameters[1] + "\'.");
+                return;
             }
 
+            Arena tempArena = new Arena(args.Parameters[1]);
+            arenas.Add(tempArena);
             return;
         }
+
+
     }
 }
