@@ -23,7 +23,6 @@ namespace Class_Wars_2._0
             this.arenaBottomR = arenaBottomR;
             this.switchPos = switchPos;
         }
-
-
     }
+
 }

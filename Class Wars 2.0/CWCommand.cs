@@ -156,7 +156,36 @@ namespace Class_Wars_2._0
 
         public static void AddArena(CommandArgs args)
         {
+            if (!args.Player.HasPermission("cw.add"))
+            {
+                args.Player.SendErrorMessage("You do not have permission to add arenas.");
+                return;
+            }
 
+            if (args.Parameters.Count > 2)
+                DetailedCWHelp(args);
+
+            TSPlayer player = args.Player;
+            switch (args.Parameters[1])
+            {
+                case "none":
+                    player.SendInfoMessage("\'None\' is reserved for internal plugin use.");
+                    return;
+                case "grandom":
+                    player.SendInfoMessage("\'grandom\' is reserved for selecting random maps in the \'good\' category.");
+                    return;
+                case "crandom":
+                    player.SendInfoMessage("\'crandom\' is reserved for selecting random maps in the \'crap\' category.");
+                    return;
+                case "random":
+                    player.SendInfoMessage("\'random\' is reserved for selecting random maps.");
+                    return;
+            }
+
+            if (arenas.exists(args.Parameters[1]))
+            {
+                player.SendInfoMessage("There is already an arena named \'" + args.Parameters[1] + "\'.");
+            }
 
             return;
         }
