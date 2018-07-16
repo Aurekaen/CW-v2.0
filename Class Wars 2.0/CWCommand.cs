@@ -156,16 +156,19 @@ namespace Class_Wars_2._0
 
         public static void AddArena(CommandArgs args)
         {
-            if (!args.Player.HasPermission("cw.add"))
+            TSPlayer player = args.Player;
+            if (!player.HasPermission("cw.add"))
             {
-                args.Player.SendErrorMessage("You do not have permission to add arenas.");
+                player.SendErrorMessage("You do not have permission to add arenas.");
                 return;
             }
 
-            if (args.Parameters.Count > 2)
+            if (args.Parameters.Count < 2)
+            {
                 DetailedCWHelp(args);
+                return;
+            }
 
-            TSPlayer player = args.Player;
             switch (args.Parameters[1])
             {
                 case "none":
@@ -184,17 +187,54 @@ namespace Class_Wars_2._0
 
             Arenas arenas = new Arenas();
 
-            if (arenas.Exists(args.Parameters[1]))
+            args.Parameters.RemoveAt(0);
+            string x = string.Join(" ", args.Parameters);
+            if (arenas.Exists(x))
             {
-                player.SendInfoMessage("There is already an arena named \'" + args.Parameters[1] + "\'.");
+                player.SendInfoMessage("There is already an arena named \'" + x + "\'.");
                 return;
             }
 
-            Arena tempArena = new Arena(args.Parameters[1]);
+            Arena tempArena = new Arena(x);
+            player.SendInfoMessage("Arena " + x + " has been added. Please remember to assign all values with /cw set before playing.");
             arenas.Add(tempArena);
             return;
         }
 
+        public static void DelArena(CommandArgs args)
+        {
+            TSPlayer player = args.Player;
+            if (!player.HasPermission("cw.del"))
+            {
+                args.Player.SendErrorMessage("You do not have permission to delete arenas.");
+                return;
+            }
 
+            if (args.Parameters.Count < 2)
+            {
+                DetailedCWHelp(args);
+                return;
+            }
+
+            Arenas arenas = new Arenas();
+
+            args.Parameters.RemoveAt(0);
+            string x = string.Join(" ", args.Parameters);
+
+            if (arenas.Exists(x))
+            {
+                arenas.Delete(x);
+                player.SendInfoMessage("Arena " + x + " has been deleted. Forever. Can you live with yourself?");
+                return;
+            }
+
+            player.SendInfoMessage("Arena " + x + " not found. Try using /cw list to check your spelling.");
+            return;
+        }
+
+        public static void SetArena(CommandArgs args)
+        {
+
+        }
     }
 }

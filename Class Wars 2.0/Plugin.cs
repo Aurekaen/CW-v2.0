@@ -68,6 +68,11 @@ namespace Class_Wars_2._0
                 CWCommand.AddArena(args);
                 return;
             }
+            if (args.Parameters[0] == "del")
+            {
+                CWCommand.DelArena(args);
+                return;
+            }
 
         }
         #endregion

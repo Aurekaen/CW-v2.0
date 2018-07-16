@@ -34,5 +34,22 @@ namespace Class_Wars_2._0
         {
             arena_db.AddArena(a);
         }
+
+        public void Delete(Arena a)
+        {
+            GoodDelete(a.name);
+        }
+
+        public void Delete(string a)
+        {
+            GoodDelete(a);
+        }
+
+        private void GoodDelete(string x) //Makes sure capitalization matches what's in the 
+        {
+            List<Arena> _arenas = arenas.FindAll(a => a.name.ToLowerInvariant() == x.ToLowerInvariant());
+            if (_arenas.Count > 0)
+                arena_db.DeleteArenaByName(_arenas[0].name);
+        }
     }
 }
