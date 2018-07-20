@@ -24,7 +24,7 @@ namespace Class_Wars_2._0
     * -Reset bunkers
     */
 
-    class Game
+    public class Game
     {
         #region Construction
         private List<PlayerInfo> Players;
@@ -34,15 +34,8 @@ namespace Class_Wars_2._0
         private bool won, doubledChecked, winner; //false for blue, true for red
         private int blueScore, redScore;
 
-        public Game(List<PlayerInfo> p, Arena a, bool altT)
+        public Game()
         {
-            Players = p;
-            arena = a;
-            altTeams = altT;
-            won = false;
-            winner = false;
-            CheckScore();
-            StartGame();
         }
         #endregion
 

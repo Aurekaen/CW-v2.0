@@ -15,6 +15,7 @@ namespace Class_Wars_2._0
         public override string Author { get { return "Alec"; } }
         public override string Description { get { return "Automatic Class Wars hosting plugin."; } }
         public override Version Version { get { return new Version(1, 0, 0, 0); } }
+        public Game CWMain = new Game();
 
         public ClassWars(Main game) : base(game)
         {
@@ -76,6 +77,11 @@ namespace Class_Wars_2._0
             if (args.Parameters[0].ToLowerInvariant() == "set")
             {
                 CWCommand.SetArena(args);
+                return;
+            }
+            if (args.Parameters[0].ToLowerInvariant() == "goto" || args.Parameters[0].ToLowerInvariant() == "go")
+            {
+                CWCommand.GoToArena(args);
                 return;
             }
 

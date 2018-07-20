@@ -327,5 +327,39 @@ namespace Class_Wars_2._0
             _arenas.Update(a);
             return;
         }
+
+        public static void GoToArena(CommandArgs args)
+        {
+            TSPlayer player = args.Player;
+            if (!player.HasPermission("tshock.admin.warp"))
+            {
+                player.SendErrorMessage("You do not have permission to teleport.");
+                return;
+            }
+            if (args.Parameters.Count() < 2)
+            {
+                DetailedCWHelp(args);
+                return;
+            }
+
+            args.Parameters.RemoveAt(0);
+            string arenaName = string.Join(" ", args.Parameters);
+            Arenas a = new Arenas();
+            Arena _arena = new Arena("temp");
+            if (a.Get(arenaName, ref _arena))
+            {
+                player.Teleport(_arena.host.X * 16, _arena.host.Y * 16);
+                player.SendInfoMessage("You have been teleported to " + _arena.name);
+                return;
+            }
+
+            player.SendErrorMessage("Arena " + arenaName + " not found. Try using \'/cw list\' to check your spelling.");
+            return;
+        }
+
+        public static void Spectate(CommandArgs args)
+        {
+
+        }
     }
 }
