@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -234,7 +235,97 @@ namespace Class_Wars_2._0
 
         public static void SetArena(CommandArgs args)
         {
+            TSPlayer player = args.Player;
+            if (!player.HasPermission("cw.add"))
+            {
+                player.SendErrorMessage("You do not have permission to add arenas.");
+                return;
+            }
 
+            if (args.Parameters.Count < 3)
+            {
+                DetailedCWHelp(args);
+                return;
+            }
+
+            Arenas _arenas = new Arenas();
+            string arenaName = args.Parameters[1];
+            CommandArgs args2 = args;
+            args.Parameters.RemoveAt(0);
+            args.Parameters.RemoveAt(0);
+            while(true)
+            {
+                string x = args.Parameters[0].ToLowerInvariant();
+                if (x == "host" || x == "redspawn" || x == "rs" || x == "bluespawn" || x == "bs" || x == "arenabounds" || x == "ab" || x == "spawndelay" || x == "spawn")
+                {
+                    break;
+                }
+                else
+                {
+                    arenaName += x;
+                    args.Parameters.RemoveAt(0);
+                }
+            }
+            if (!_arenas.Exists(arenaName))
+            {
+                player.SendErrorMessage("Arena " + arenaName + " not found. Try using \'/cw list\' to check your spelling.");
+                return;
+            }
+            Arena a = new Arena("temp");
+            if (!_arenas.Get(arenaName, ref a))
+            {
+                player.SendErrorMessage("Arena " + arenaName + " not found. Try using \'/cw list\' to check your spelling.");
+                return;
+            }
+            switch (args.Parameters[0])
+            {
+                case "host":
+                    a.host = new Vector2(player.X, player.Y);
+                    player.SendInfoMessage("Host location for " + a.name + " set to your position.");
+                    break;
+                case "redspawn":
+                case "rs":
+                    a.rSpawn = new Vector2(player.X, player.Y);
+                    player.SendInfoMessage("Red spawn location for " + a.name + " set to your position.");
+                    break;
+                case "bluespawn":
+                case "bs":
+                    a.bSpawn = new Vector2(player.X, player.Y);
+                    player.SendInfoMessage("Blue spawn location for " + a.name + " set to your position.");
+                    break;
+                case "arenabounds":
+                case "ab":
+                    int tempPointCount;
+                    if (int.TryParse(args.Parameters[1], out tempPointCount) && (tempPointCount == 1 || tempPointCount == 2))
+                    {
+                        player.SendInfoMessage("Select point " + args.Parameters[1]);
+                        player.AwaitingTempPoint = tempPointCount;
+                        return;
+                    }
+                    if ("define".StartsWith(args.Parameters[1].ToLowerInvariant()))
+                    {
+                        a.arenaTopL = new Vector2((Math.Min(player.TempPoints[0].X, player.TempPoints[1].X)), (Math.Min(player.TempPoints[0].Y, player.TempPoints[1].Y)));
+                        a.arenaBottomR = new Vector2((Math.Max(player.TempPoints[0].X, player.TempPoints[1].X)), (Math.Max(player.TempPoints[0].Y, player.TempPoints[1].Y)));
+                        player.SendInfoMessage("Boundaries for " + a.name + " have been updated.");
+                        break;
+                    }
+                    DetailedCWHelp(args2);
+                    break;
+                case "spawn":
+                case "spawndelay":
+                    if (int.TryParse(args.Parameters[1], out a.spawnDelay))
+                    {
+                        player.SendInfoMessage("Spawn delay set to " + a.spawnDelay + " milliseconds for " + a.name + ".");
+                        break;
+                    }
+                    DetailedCWHelp(args2);
+                    return;
+                default:
+                    DetailedCWHelp(args2);
+                    return;
+            }
+            _arenas.Update(a);
+            return;
         }
     }
 }

@@ -12,8 +12,9 @@ namespace Class_Wars_2._0
         internal string name;
         internal Vector2 host;
         internal Vector2 rSpawn, bSpawn, arenaTopL, arenaBottomR, switchPos;
+        internal int spawnDelay;
 
-        public Arena(string name, Vector2 host, Vector2 rSpawn, Vector2 bSpawn, Vector2 arenaTopL, Vector2 arenaBottomR, Vector2 switchPos)
+        public Arena(string name, Vector2 host, Vector2 rSpawn, Vector2 bSpawn, Vector2 arenaTopL, Vector2 arenaBottomR, int spawnDelay)
         {
             this.name = name;
             this.host = host;
@@ -21,7 +22,7 @@ namespace Class_Wars_2._0
             this.bSpawn = bSpawn;
             this.arenaTopL = arenaTopL;
             this.arenaBottomR = arenaBottomR;
-            this.switchPos = switchPos;
+            this.spawnDelay = spawnDelay;
         }
 
         public Arena(string name)

@@ -19,9 +19,19 @@ namespace Class_Wars_2._0
 
         public bool Exists(string name)
         {
-            if (arenas.Select(a => a.name.ToLowerInvariant() == name.ToLowerInvariant()).Count() == 0)
+            if (arenas.FindAll(a => a.name.ToLowerInvariant() == name.ToLowerInvariant()).Count() == 0)
                 return false;
             return true;
+        }
+
+        public bool Get(string name, ref Arena a)
+        {
+            if (Exists(name))
+            {
+                a = arenas.FindAll(x => x.name.ToLowerInvariant() == name.ToLowerInvariant()).ToList()[0];
+                return true;
+            }
+            return false;
         }
 
         public void Reload()
@@ -35,11 +45,6 @@ namespace Class_Wars_2._0
             arena_db.AddArena(a);
         }
 
-        public void Delete(Arena a)
-        {
-            GoodDelete(a.name);
-        }
-
         public void Delete(string a)
         {
             GoodDelete(a);
@@ -50,6 +55,11 @@ namespace Class_Wars_2._0
             List<Arena> _arenas = arenas.FindAll(a => a.name.ToLowerInvariant() == x.ToLowerInvariant());
             if (_arenas.Count > 0)
                 arena_db.DeleteArenaByName(_arenas[0].name);
+        }
+
+        public void Update(Arena a)
+        {
+            arena_db.UpdateArena(a);
         }
     }
 }
