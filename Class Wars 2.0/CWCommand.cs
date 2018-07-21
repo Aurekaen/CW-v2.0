@@ -23,7 +23,7 @@ namespace Class_Wars_2._0
                     player.SendInfoMessage("/cw start [arena]");
                     player.SendInfoMessage("Begins a game of Class Wars, using the specified arena.");
                     return;
-                    }
+                }
 
                 if (parameters[1] == "add")
                 {
@@ -33,52 +33,52 @@ namespace Class_Wars_2._0
                 }
 
                 if (parameters[1] == "set")
+                {
+                    if (parameters.Count() > 2)
                     {
-                        if (parameters.Count() > 2)
+                        if (parameters[2] == "host")
                         {
-                            if (parameters[2] == "host")
-                            {
-                                player.SendInfoMessage("/cw set [arena] host");
-                                player.SendInfoMessage("This sets the host location to your current location.");
-                                player.SendInfoMessage("This location is used as the teleport destination when using \"/cw goto\" or \"/cw spectate\"");
-                                return;
-                            }
-
-                            if (parameters[2] == "redspawn" || parameters[2] == "bluespawn")
-                            {
-                                player.SendInfoMessage("/cw set [arena] <redspawn|bluespawn>");
-                                player.SendInfoMessage("This sets the spawn of the respective team to your current location, for the specified arena.");
-                                player.SendInfoMessage("This command can be abbreviated as \"/cw set [arena] <rs|bs>\"");
-                                return;
-                            }
-
-                            if (parameters[2] == "arenabounds" || parameters[2] == "ab")
-                            {
-                                player.SendInfoMessage("/cw set [arena] arenabounds <1/2>");
-                                player.SendInfoMessage("This command sets point 1 or 2 to the next block you break or place.");
-                                player.SendInfoMessage("/cw set [arena] arenabounds define");
-                                player.SendInfoMessage("This command sets the arena boundaries to the rectangle defined by points 1 and 2");
-                                player.SendInfoMessage("These commands define the boundaries of a given arena, which is used to determine the number of blocks remaining in the bunker.");
-                                player.SendInfoMessage("These commands can be abbreviated by replacing \"arenabounds\" with \"ab\"");
-                                return;
-                            }
-
-                            if (parameters[2] == "spawn" || parameters[2] == "spawndelay")
-                            {
-                                player.SendInfoMessage("/cw set [arena] spawndelay <milliseconds>");
-                                player.SendInfoMessage("This command specifies the delay in milliseconds between a player spawning and being teleported to the arena.");
-                                player.SendInfoMessage("This cannot be smaller than 25 or larger than 20000");
-                                player.SendInfoMessage("This command can be abbreviated by replacing \"spawndelay\" with \"spawn\" or \"s\"");
-                                return;
-                            }
+                            player.SendInfoMessage("/cw set [arena] host");
+                            player.SendInfoMessage("This sets the host location to your current location.");
+                            player.SendInfoMessage("This location is used as the teleport destination when using \"/cw goto\" or \"/cw spectate\"");
+                            return;
                         }
 
-                        player.SendInfoMessage("/cw set [arena] <host|redspawn|bluespawn|arenabounds|spawndelay>");
-                        player.SendInfoMessage("This command is used to specify parameters for a given arena.");
-                        player.SendInfoMessage("Use the following command for more detailed information:");
-                        player.SendInfoMessage("/cw help set <host|redspawn|bluespawn|arenabounds|spawndelay>");
-                        return;
+                        if (parameters[2] == "redspawn" || parameters[2] == "bluespawn")
+                        {
+                            player.SendInfoMessage("/cw set [arena] <redspawn|bluespawn>");
+                            player.SendInfoMessage("This sets the spawn of the respective team to your current location, for the specified arena.");
+                            player.SendInfoMessage("This command can be abbreviated as \"/cw set [arena] <rs|bs>\"");
+                            return;
+                        }
+
+                        if (parameters[2] == "arenabounds" || parameters[2] == "ab")
+                        {
+                            player.SendInfoMessage("/cw set [arena] arenabounds <1/2>");
+                            player.SendInfoMessage("This command sets point 1 or 2 to the next block you break or place.");
+                            player.SendInfoMessage("/cw set [arena] arenabounds define");
+                            player.SendInfoMessage("This command sets the arena boundaries to the rectangle defined by points 1 and 2");
+                            player.SendInfoMessage("These commands define the boundaries of a given arena, which is used to determine the number of blocks remaining in the bunker.");
+                            player.SendInfoMessage("These commands can be abbreviated by replacing \"arenabounds\" with \"ab\"");
+                            return;
+                        }
+
+                        if (parameters[2] == "spawn" || parameters[2] == "spawndelay")
+                        {
+                            player.SendInfoMessage("/cw set [arena] spawndelay <milliseconds>");
+                            player.SendInfoMessage("This command specifies the delay in milliseconds between a player spawning and being teleported to the arena.");
+                            player.SendInfoMessage("This cannot be smaller than 25 or larger than 20000");
+                            player.SendInfoMessage("This command can be abbreviated by replacing \"spawndelay\" with \"spawn\" or \"s\"");
+                            return;
+                        }
                     }
+
+                    player.SendInfoMessage("/cw set [arena] <host|redspawn|bluespawn|arenabounds|spawndelay>");
+                    player.SendInfoMessage("This command is used to specify parameters for a given arena.");
+                    player.SendInfoMessage("Use the following command for more detailed information:");
+                    player.SendInfoMessage("/cw help set <host|redspawn|bluespawn|arenabounds|spawndelay>");
+                    return;
+                }
 
                 if (parameters[1] == "command" || parameters[1] == "com")
                 {

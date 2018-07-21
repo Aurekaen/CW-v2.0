@@ -64,22 +64,23 @@ namespace Class_Wars_2._0
                 CWCommand.DetailedCWHelp(args);
                 return;
             }
-            if (args.Parameters[0].ToLowerInvariant() == "add")
+            string x = args.Parameters[0].ToLowerInvariant();
+            if (x == "add")
             {
                 CWCommand.AddArena(args);
                 return;
             }
-            if (args.Parameters[0].ToLowerInvariant() == "del")
+            if (x == "del")
             {
                 CWCommand.DelArena(args);
                 return;
             }
-            if (args.Parameters[0].ToLowerInvariant() == "set")
+            if (x == "set")
             {
                 CWCommand.SetArena(args);
                 return;
             }
-            if (args.Parameters[0].ToLowerInvariant() == "goto" || args.Parameters[0].ToLowerInvariant() == "go")
+            if (x == "goto" || x == "go")
             {
                 CWCommand.GoToArena(args);
                 return;

@@ -66,6 +66,7 @@
     <Compile Include="ArenaDatabase.cs" />
     <Compile Include="Arenas.cs" />
     <Compile Include="Buff.cs" />
+    <Compile Include="CSCommand.cs" />
     <Compile Include="CWCommand.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="PlayerInfo.cs" />
