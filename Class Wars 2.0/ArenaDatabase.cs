@@ -34,8 +34,8 @@ namespace Class_Wars_2._0
                 new SqlColumn("ArenaTopLeftY", MySqlDbType.Int32),
                 new SqlColumn("ArenaBottomRightX", MySqlDbType.Int32),
                 new SqlColumn("ArenaBottomRightY", MySqlDbType.Int32),
-                new SqlColumn("SwitchPosX", MySqlDbType.Int32),
-                new SqlColumn("SwitchPosY", MySqlDbType.Int32));
+                new SqlColumn("SpawnDelay", MySqlDbType.Int32),
+                new SqlColumn("Commands", MySqlDbType.String));
             sqlCreator.EnsureTableStructure(table);
         }
 
@@ -86,8 +86,8 @@ namespace Class_Wars_2._0
 
         public int AddArena(Arena copy)
         {
-            Query("INSERT INTO CWArenas (Name, HostX, HostY, RedSpawnX, RedSpawnY, BlueSpawnX, BlueSpawnY, ArenaTopLeftX, ArenaTopLeftY, ArenaBottomRightX, ArenaBottomRightY, SwitchPosX, SwitchPosY) VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12)",
-                copy.name, copy.host.X, copy.host.Y, copy.rSpawn.X, copy.rSpawn.Y, copy.bSpawn.X, copy.bSpawn.Y, copy.arenaTopL.X, copy.arenaTopL.Y, copy.arenaBottomR.X, copy.arenaBottomR.Y, copy.switchPos.X, copy.switchPos.Y);
+            Query("INSERT INTO CWArenas (Name, HostX, HostY, RedSpawnX, RedSpawnY, BlueSpawnX, BlueSpawnY, ArenaTopLeftX, ArenaTopLeftY, ArenaBottomRightX, ArenaBottomRightY, SpawnDelay) VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11)",
+                copy.name, copy.host.X, copy.host.Y, copy.rSpawn.X, copy.rSpawn.Y, copy.bSpawn.X, copy.bSpawn.Y, copy.arenaTopL.X, copy.arenaTopL.Y, copy.arenaBottomR.X, copy.arenaBottomR.Y, copy.spawnDelay);
 
             using (var reader = QueryReader("SELECT max(ID) FROM CWArenas"))
             {
@@ -115,8 +115,8 @@ namespace Class_Wars_2._0
         {
             var query =
                 string.Format(
-                    "UPDATE CWArenas SET HostX = {0}, HostY = {1}, RedSpawnX = {2}, RedSpawnY = {3}, BlueSpawnX = {4}, BlueSpawnY = {5}, ArenaTopLeftX = {6}, ArenaTopLeftY = {7}, ArenaBottomRightX = {8}, ArenaBottomRightY = {9}, SwitchPosX = {10}, SwitchPosY = {11} WHERE Name = @0 ",
-                    update.host.X, update.host.Y, update.rSpawn.X, update.rSpawn.Y, update.bSpawn.X, update.bSpawn.Y, update.arenaTopL.X, update.arenaTopL.Y, update.arenaBottomR.X, update.arenaBottomR.Y, update.switchPos.X, update.switchPos.Y);
+                    "UPDATE CWArenas SET HostX = {0}, HostY = {1}, RedSpawnX = {2}, RedSpawnY = {3}, BlueSpawnX = {4}, BlueSpawnY = {5}, ArenaTopLeftX = {6}, ArenaTopLeftY = {7}, ArenaBottomRightX = {8}, ArenaBottomRightY = {9}, SpawnDelay = {10} WHERE Name = @0 ",
+                    update.host.X, update.host.Y, update.rSpawn.X, update.rSpawn.Y, update.bSpawn.X, update.bSpawn.Y, update.arenaTopL.X, update.arenaTopL.Y, update.arenaBottomR.X, update.arenaBottomR.Y, update.spawnDelay);
 
             Query(query, update.name);
         }
@@ -134,9 +134,10 @@ namespace Class_Wars_2._0
                     Vector2 BlueSpawn = new Vector2(reader.Get<float>("BlueSpawnX"), reader.Get<float>("BlueSpawnY"));
                     Vector2 ArenaTopL = new Vector2(reader.Get<float>("ArenaTopLeftX"), reader.Get<float>("ArenaTopLeftY"));
                     Vector2 ArenaBottomRight = new Vector2(reader.Get<float>("ArenaBottomRightX"), reader.Get<float>("ArenaBottomRightY"));
-                    Vector2 switchPos = new Vector2(reader.Get<float>("SwitchPosX"), reader.Get<float>("SwitchPosY"));
+                    int spawnDelay = reader.Get<int>("SpawnDelay");
+                    string commands = reader.Get<string>("Commands");
 
-                    var arena = new Arena(Name, host, RedSpawn, BlueSpawn, ArenaTopL, ArenaBottomRight, switchPos);
+                    var arena = new Arena(Name, host, RedSpawn, BlueSpawn, ArenaTopL, ArenaBottomRight, spawnDelay, commands);
                     list.Add(arena);
                 }
             }

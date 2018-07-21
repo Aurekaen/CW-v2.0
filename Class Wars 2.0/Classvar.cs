@@ -7,7 +7,7 @@ using TShockAPI;
 
 namespace Class_Wars_2._0
 {
-    class Classvar
+    public class Classvar
     {
         public string name, category;
         public NetItem[] inventory;

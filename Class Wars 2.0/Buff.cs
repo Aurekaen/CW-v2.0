@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Class_Wars_2._0
 {
-    class Buff
+    public class Buff
     {
         protected int id, duration;
 
@@ -17,7 +17,7 @@ namespace Class_Wars_2._0
         }
     }
 
-    class ItemBuff : Buff
+    public class ItemBuff : Buff
     {
         internal int item;
 
@@ -27,7 +27,7 @@ namespace Class_Wars_2._0
         }
     }
 
-    class AmmoRegen
+    public class AmmoRegen
     {
         internal int refresh, item, quantity, maxCount, prefix;
 

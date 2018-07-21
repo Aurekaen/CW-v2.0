@@ -8,7 +8,7 @@ using TShockAPI;
 
 namespace Class_Wars_2._0
 {
-    class PlayerInfo
+    public class PlayerInfo
     {
         internal int UserID;
         public Classvar Class;
